@@ -13,7 +13,8 @@ class ParserTests: XCTestCase {
         ("testConsumeUntil", testConsumeUntil),
         ("testConsumeWhile", testConsumeWhile),
         ("testConsume", testConsume),
-        ("testConsumePercentDecoded", testConsumePercentDecoded)
+        ("testConsumePercentDecoded", testConsumePercentDecoded),
+        ("testConsumePercentDecodedFailed", testConsumePercentDecodedFailed)
     ]
     
     func testParserInit() {
@@ -146,15 +147,30 @@ class ParserTests: XCTestCase {
             .percent,
             0x32, //2
             .C,
+            .percent,
+            0x32, // 2
+            0x00,
             .f
         ]
         
-        let expected: [Byte] = [.a, .C, .semicolon, .comma, .comma, .f]
+        let expected: [Byte] = [.a, .C, .semicolon, .comma, .comma, .space, .f]
         
         var parser = DataURIParser(scanner: Scanner(bytes))
         let output = try! parser.consumePercentDecoded()
         
         XCTAssertEqual(output, expected)
         XCTAssertNil(parser.scanner.peek())
+    }
+    
+    func testConsumePercentDecodedFailed() {
+        let bytes: [Byte] = [
+            .percent,
+            .C,
+        ]
+    
+        expect(toThrow: DataURIParser.Error.invalidURI) {
+            var parser = DataURIParser(scanner: Scanner(bytes))
+            _ = try parser.consumePercentDecoded()
+        }
     }
 }

@@ -2,3 +2,4 @@ coverage:
   range: "80...100"
   ignore:
     - "Sources/Scanner.swift"
+    - "Sources/DataURI+String.swift"
