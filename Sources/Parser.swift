@@ -1,6 +1,7 @@
 import Core
 
-struct DataURIParser {
+/// A parser for decoding Data URIs.
+public struct DataURIParser {
     enum Error: Swift.Error {
         case invalidScheme
         case invalidURI
@@ -14,7 +15,15 @@ struct DataURIParser {
 }
 
 extension DataURIParser {
-    static func parse(uri: String) throws -> (Bytes, Bytes?, Bytes) {
+    /**
+        Parses a Data URI and returns its type and data.
+     
+        - Parameters:
+            - uri: The URI to be parsed.
+     
+        - Returns: (type: Bytes, typeMetadata: Bytes?, data: Bytes)
+     */
+    public static func parse(uri: String) throws -> (Bytes, Bytes?, Bytes) {
         guard uri.hasPrefix("data:") else {
             throw Error.invalidScheme
         }
@@ -25,11 +34,15 @@ extension DataURIParser {
         
         var parser = DataURIParser(scanner: scanner)
         var (type, typeMetadata) = try parser.extractType()
-        let data = try parser.extractData()
+        var data = try parser.extractData()
         
         //Required by RFC 2397
         if type.isEmpty {
             type = "text/plain;charset=US-ASCII".bytes
+        }
+        
+        if let typeMetadata = typeMetadata, typeMetadata == "base64".bytes {
+            data = data.base64Decoded
         }
         
         return (type, typeMetadata, data)
@@ -63,7 +76,7 @@ extension DataURIParser {
     mutating func extractData() throws -> Bytes {
         assert(scanner.peek() == .comma)
         scanner.pop()
-        return consume()
+        return try consumePercentDecoded()
     }
 }
 
@@ -73,6 +86,22 @@ extension DataURIParser {
         var bytes: Bytes = []
         
         while let byte = scanner.peek() {
+            scanner.pop()
+            bytes.append(byte)
+        }
+        
+        return bytes
+    }
+    
+    @discardableResult
+    mutating func consumePercentDecoded() throws -> Bytes {
+        var bytes: Bytes = []
+        
+        while var byte = scanner.peek() {
+            if byte == .percent {
+                byte = try decodePercentEncoding()
+            }
+            
             scanner.pop()
             bytes.append(byte)
         }
@@ -105,3 +134,31 @@ extension DataURIParser {
     }
 }
 
+extension DataURIParser {
+    mutating func decodePercentEncoding() throws -> Byte {
+        assert(scanner.peek() == .percent)
+        
+        guard
+            let leftMostDigit = scanner.peek(aheadBy: 1),
+            let rightMostDigit = scanner.peek(aheadBy: 2)
+        else {
+            throw Error.invalidURI
+        }
+        
+        scanner.pop(2)
+        
+        return (leftMostDigit.asciiCode * 16) + rightMostDigit.asciiCode
+    }
+}
+
+extension Byte {
+    internal var asciiCode: Byte {
+        if self >= 48 && self <= 57 {
+            return self - 48
+        } else if self >= 65 && self <= 70 {
+            return self - 55
+        } else {
+            return 0
+        }
+    }
+}
