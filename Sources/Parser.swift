@@ -1,5 +1,6 @@
 import Core
 
+/// A parser for decoding Data URIs.
 public struct DataURIParser {
     enum Error: Swift.Error {
         case invalidScheme
@@ -14,6 +15,14 @@ public struct DataURIParser {
 }
 
 extension DataURIParser {
+    /**
+        Parses a Data URI and returns its type and data.
+     
+        - Parameters:
+            - uri: The URI to be parsed.
+     
+        - Returns: (type: Bytes, typeMetadata: Bytes?, data: Bytes)
+     */
     public static func parse(uri: String) throws -> (Bytes, Bytes?, Bytes) {
         guard uri.hasPrefix("data:") else {
             throw Error.invalidScheme

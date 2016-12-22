@@ -18,6 +18,11 @@ extension Sequence where Iterator.Element == Byte {
 }
 
 extension String {
+    /**
+        Parses a Data URI and returns its type and data.
+     
+        - Returns: The type of the file and its data as bytes.
+     */
     public func dataURIDecoded() throws -> (type: String, data: Bytes) {
         let (type, _, data) = try DataURIParser.parse(uri: self)
         return (type.string, data)
