@@ -12,6 +12,7 @@ class DataURITests: XCTestCase {
     ]
     
     func testBase64() {
+        //FIXME(Brett): remove when vapor/core is updated to 1.1
         let base64Bytes = "SGVsbG8sIHdvcmxkIQ==".bytes
         let output = base64Bytes.base64Decoded
         XCTAssertEqual(output.string, "Hello, world!")
@@ -24,7 +25,7 @@ class DataURITests: XCTestCase {
         
         XCTAssertEqual(type.string, "text/plain;charset=US-ASCII")
         XCTAssertNil(meta)
-        XCTAssertEqual(data.string, "Hello%2C%20World!")
+        XCTAssertEqual(data.string, "Hello, World!")
     }
     
     func testBase64Text() {
@@ -34,7 +35,7 @@ class DataURITests: XCTestCase {
         
         XCTAssertEqual(type.string, "text/plain")
         XCTAssertEqual(meta?.string, "base64")
-        XCTAssertEqual(data.string, "SGVsbG8sIFdvcmxkIQ%3D%3D")
+        XCTAssertEqual(data.string, "Hello, World!")
     }
     
     func testHTMLText() {
@@ -44,7 +45,7 @@ class DataURITests: XCTestCase {
         
         XCTAssertEqual(type.string, "text/html")
         XCTAssertNil(meta)
-        XCTAssertEqual(data.string, "%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E")
+        XCTAssertEqual(data.string, "<h1>Hello, World!</h1>")
     }
     
     func testHTMLJavascriptText() {
