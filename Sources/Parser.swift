@@ -1,6 +1,6 @@
 import Core
 
-struct DataURIParser {
+public struct DataURIParser {
     enum Error: Swift.Error {
         case invalidScheme
         case invalidURI
@@ -14,7 +14,7 @@ struct DataURIParser {
 }
 
 extension DataURIParser {
-    static func parse(uri: String) throws -> (Bytes, Bytes?, Bytes) {
+    public static func parse(uri: String) throws -> (Bytes, Bytes?, Bytes) {
         guard uri.hasPrefix("data:") else {
             throw Error.invalidScheme
         }
@@ -25,11 +25,15 @@ extension DataURIParser {
         
         var parser = DataURIParser(scanner: scanner)
         var (type, typeMetadata) = try parser.extractType()
-        let data = try parser.extractData()
+        var data = try parser.extractData()
         
         //Required by RFC 2397
         if type.isEmpty {
             type = "text/plain;charset=US-ASCII".bytes
+        }
+        
+        if type == "base64".bytes {
+            data = data.base64Decoded
         }
         
         return (type, typeMetadata, data)

@@ -11,6 +11,12 @@ class DataURITests: XCTestCase {
         ("testSpeed", testSpeed)
     ]
     
+    func testBase64() {
+        let base64Bytes = "SGVsbG8sIHdvcmxkIQ==".bytes
+        let output = base64Bytes.base64Decoded
+        XCTAssertEqual(output.string, "Hello, world!")
+    }
+    
     func testTextNoType() {
         let (type, meta, data) = try! DataURIParser.parse(
             uri: "data:,Hello%2C%20World!"
