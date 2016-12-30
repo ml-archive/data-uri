@@ -6,6 +6,7 @@ extension Sequence where Iterator.Element == Byte {
     internal var base64Decoded: Bytes {
         let bytes = [Byte](self)
         let dataBase64 = Data(bytes: bytes)
+        
         guard let data = Data(base64Encoded: dataBase64) else {
             return []
         }

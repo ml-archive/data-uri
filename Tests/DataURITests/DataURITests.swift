@@ -1,4 +1,7 @@
 import XCTest
+
+import Core
+
 @testable import DataURI
 
 class DataURITests: XCTestCase {
@@ -8,6 +11,7 @@ class DataURITests: XCTestCase {
         ("testHTMLText", testHTMLText),
         ("testHTMLJavascriptText", testHTMLJavascriptText),
         ("testFailedInvalidScheme", testFailedInvalidScheme),
+        ("testPublicInterface", testPublicInterface),
         ("testSpeed", testSpeed)
     ]
     
@@ -64,6 +68,14 @@ class DataURITests: XCTestCase {
         }
     }
     
+    func testPublicInterface() {
+        expectNoThrow() {
+            let (data, type) = try "data:,Hello%2C%20World!".dataURIDecoded()
+            XCTAssertEqual(data.string, "Hello, World!")
+            XCTAssertEqual(type, "text/plain;charset=US-ASCII")
+        }
+    }
+    
     func testSpeed() {
         measure {
             for _ in 0..<10_000 {
@@ -72,5 +84,17 @@ class DataURITests: XCTestCase {
                 )
             }
         }
+    }
+    
+    //FIXME(Brett): remove when Core 1.1 includes `base64Decoded`
+    // required for 100% coverage
+    func testBase64DecodeFailure() {
+        var bytes = "SGVsbG8sIFdvcmxkIQ%3D%3D".bytes //Hello World!
+        bytes.append(0x1E) //invalid control character
+        let decodedBytes = bytes.base64Decoded
+        XCTAssertEqual(
+            decodedBytes, [],
+            "Invalid character should have caused the base64Decoder to escape."
+        )
     }
 }
