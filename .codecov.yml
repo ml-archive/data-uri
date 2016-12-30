@@ -3,3 +3,4 @@ coverage:
   ignore:
     - "Sources/Scanner.swift"
     - "Sources/DataURI+String.swift"
+    - "Tests/"

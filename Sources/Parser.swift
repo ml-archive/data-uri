@@ -21,9 +21,9 @@ extension DataURIParser {
         - Parameters:
             - uri: The URI to be parsed.
      
-        - Returns: (type: Bytes, typeMetadata: Bytes?, data: Bytes)
+        - Returns: (data: Bytes, type: Bytes, typeMetadata: Bytes?)
      */
-    public static func parse(uri: String) throws -> (Bytes, Bytes?, Bytes) {
+    public static func parse(uri: String) throws -> (Bytes, Bytes, Bytes?) {
         guard uri.hasPrefix("data:") else {
             throw Error.invalidScheme
         }
@@ -45,7 +45,7 @@ extension DataURIParser {
             data = data.base64Decoded
         }
         
-        return (type, typeMetadata, data)
+        return (data, type, typeMetadata)
     }
 }
 
