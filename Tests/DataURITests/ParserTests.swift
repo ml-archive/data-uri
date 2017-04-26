@@ -42,7 +42,7 @@ class ParserTests: XCTestCase {
             var parser = DataURIParser(scanner: Scanner(bytes))
             let (type, metadata) = try parser.extractType()
             
-            XCTAssertEqual(type.string, "text/html")
+            XCTAssertEqual(type.makeString(), "text/html")
             XCTAssertNil(metadata)
         }
     }
@@ -66,7 +66,7 @@ class ParserTests: XCTestCase {
             var parser = DataURIParser(scanner: Scanner(bytes))
             let metadata = try parser.extractTypeMetadata()
             
-            XCTAssertEqual(metadata.string, "base64")
+            XCTAssertEqual(metadata.makeString(), "base64")
         }
     }
     
@@ -76,9 +76,9 @@ class ParserTests: XCTestCase {
             var parser = DataURIParser(scanner: Scanner(bytes))
             let (type, metadata) = try parser.extractType()
             
-            XCTAssertEqual(type.string, "text/html")
+            XCTAssertEqual(type.makeString(), "text/html")
             XCTAssertNotNil(metadata)
-            XCTAssertEqual(metadata?.string, "base64")
+            XCTAssertEqual(metadata?.makeString(), "base64")
         }
     }
     

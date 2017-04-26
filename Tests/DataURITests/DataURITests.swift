@@ -1,5 +1,4 @@
 import XCTest
-
 import Core
 
 @testable import DataURI
@@ -17,9 +16,9 @@ class DataURITests: XCTestCase {
     
     func testBase64() {
         //FIXME(Brett): remove when vapor/core is updated to 1.1
-        let base64Bytes = "SGVsbG8sIHdvcmxkIQ==".bytes
-        let output = base64Bytes.base64Decoded
-        XCTAssertEqual(output.string, "Hello, world!")
+        let base64Bytes: Bytes = "SGVsbG8sIHdvcmxkIQ==".makeBytes()
+        let output: Bytes = base64Bytes.base64URLDecoded
+        XCTAssertEqual(output.makeString(), "Hello, world!")
     }
     
     func testTextNoType() {
@@ -27,8 +26,8 @@ class DataURITests: XCTestCase {
             uri: "data:,Hello%2C%20World!"
         )
         
-        XCTAssertEqual(data.string, "Hello, World!")
-        XCTAssertEqual(type.string, "text/plain;charset=US-ASCII")
+        XCTAssertEqual(data.makeString(), "Hello, World!")
+        XCTAssertEqual(type.makeString(), "text/plain;charset=US-ASCII")
         XCTAssertNil(meta)
     }
     
@@ -37,9 +36,9 @@ class DataURITests: XCTestCase {
             uri: "data:text/plain;base64,SGVsbG8sIFdvcmxkIQ%3D%3D"
         )
         
-        XCTAssertEqual(data.string, "Hello, World!")
-        XCTAssertEqual(type.string, "text/plain")
-        XCTAssertEqual(meta?.string, "base64")
+        XCTAssertEqual(data.makeString(), "Hello, World!")
+        XCTAssertEqual(type.makeString(), "text/plain")
+        XCTAssertEqual(meta?.makeString(), "base64")
     }
     
     func testHTMLText() {
@@ -47,8 +46,8 @@ class DataURITests: XCTestCase {
             uri: "data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E"
         )
         
-        XCTAssertEqual(data.string, "<h1>Hello, World!</h1>")
-        XCTAssertEqual(type.string, "text/html")
+        XCTAssertEqual(data.makeString(), "<h1>Hello, World!</h1>")
+        XCTAssertEqual(type.makeString(), "text/html")
         XCTAssertNil(meta)
     }
     
@@ -57,8 +56,8 @@ class DataURITests: XCTestCase {
             uri: "data:text/html,<script>alert('hi');</script>"
         )
         
-        XCTAssertEqual(data.string, "<script>alert('hi');</script>")
-        XCTAssertEqual(type.string, "text/html")
+        XCTAssertEqual(data.makeString(), "<script>alert('hi');</script>")
+        XCTAssertEqual(type.makeString(), "text/html")
         XCTAssertNil(meta)
     }
     
@@ -71,7 +70,7 @@ class DataURITests: XCTestCase {
     func testPublicInterface() {
         expectNoThrow() {
             let (data, type) = try "data:,Hello%2C%20World!".dataURIDecoded()
-            XCTAssertEqual(data.string, "Hello, World!")
+            XCTAssertEqual(data.makeString(), "Hello, World!")
             XCTAssertEqual(type, "text/plain;charset=US-ASCII")
         }
     }
@@ -84,17 +83,5 @@ class DataURITests: XCTestCase {
                 )
             }
         }
-    }
-    
-    //FIXME(Brett): remove when Core 1.1 includes `base64Decoded`
-    // required for 100% coverage
-    func testBase64DecodeFailure() {
-        var bytes = "SGVsbG8sIFdvcmxkIQ%3D%3D".bytes //Hello World!
-        bytes.append(0x1E) //invalid control character
-        let decodedBytes = bytes.base64Decoded
-        XCTAssertEqual(
-            decodedBytes, [],
-            "Invalid character should have caused the base64Decoder to escape."
-        )
     }
 }
