@@ -1,8 +1,18 @@
+// swift-tools-version:4.1
+
 import PackageDescription
 
 let package = Package(
     name: "DataURI",
+    products: [
+        .library(name: "DataURI", targets: ["DataURI"])
+    ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
+        .package(url: "https://github.com/vapor/vapor.git", from: "2.0.0"),
+    ],
+    targets: [
+        .target(name: "DataURI", dependencies: ["Vapor"]),
+        .testTarget(name: "DataUIRTests", dependencies: ["DataURI"])
     ]
+
 )
