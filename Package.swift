@@ -8,11 +8,19 @@ let package = Package(
         .library(name: "DataURI", targets: ["DataURI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "2.0.0"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0"),
     ],
     targets: [
-        .target(name: "DataURI", dependencies: ["Vapor"]),
-        .testTarget(name: "DataUIRTests", dependencies: ["DataURI"])
+        .target(
+        name: "DataURI",
+        dependencies: ["Vapor"],
+        path: "Sources"
+        ),
+        .testTarget(
+        name: "DataUIRTests",
+        dependencies: ["DataURI"],
+        path: "Tests"
+        )
     ]
 
 )
