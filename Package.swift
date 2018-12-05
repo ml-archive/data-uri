@@ -21,6 +21,8 @@ let package = Package(
         dependencies: ["DataURI"],
         path: "Tests"
         )
-    ]
-
+    ],
+    swiftLanguageVersions: [4]
 )
+
+Version(2, 0, 0)
