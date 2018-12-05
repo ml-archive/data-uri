@@ -17,7 +17,7 @@ let package = Package(
         path: "Sources"
         ),
         .testTarget(
-        name: "DataUIRTests",
+        name: "DataURITests",
         dependencies: ["DataURI"],
         path: "Tests"
         )
