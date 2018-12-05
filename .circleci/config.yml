@@ -38,7 +38,7 @@ jobs:
           keys:
             - v2-spm-deps-{{ checksum "Package.swift" }}
       - run:
-          name: Copy Package file
+          name: Copy Package File
           command: cp Package.swift res
       - run:
           name: Build and Run Tests
@@ -46,7 +46,7 @@ jobs:
           command: |
             swift test -Xswiftc -DNOJSON
       - run:
-          name: Restoring Package file
+          name: Restoring Package File
           command: mv res Package.swift
       - save_cache:
           key: v2-spm-deps-{{ checksum "Package.swift" }}
