@@ -13,13 +13,11 @@ let package = Package(
     targets: [
         .target(
         name: "DataURI",
-        dependencies: ["Vapor"],
-        path: "Sources"
+        dependencies: ["Vapor"]
         ),
         .testTarget(
         name: "DataURITests",
-        dependencies: ["DataURI"],
-        path: "Tests"
+        dependencies: ["DataURI"]
         )
     ]
 )
