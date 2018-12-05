@@ -1,4 +1,4 @@
-// swift-tools-version:4.1
+// swift-tools-version:4.2
 
 import PackageDescription
 
@@ -21,8 +21,5 @@ let package = Package(
         dependencies: ["DataURI"],
         path: "Tests"
         )
-    ],
-    swiftLanguageVersions: [4]
+    ]
 )
-
-Version(2, 0, 0)
