@@ -6,7 +6,6 @@ public struct DataURIParser {
         case invalidScheme
         case invalidURI
     }
-    
     var scanner: Scanner<Byte>
     
     init(scanner: Scanner<Byte>) {
@@ -41,10 +40,12 @@ extension DataURIParser {
             type = "text/plain;charset=US-ASCII".bytes
         }
         
-        if let typeMetadata = typeMetadata, typeMetadata == "base64".bytes {
-            data = data.base64Decoded
+        if let typeMetadata = typeMetadata, typeMetadata == "base64".bytes,
+            let decodedData = Data(base64Encoded: data.convertToData()),
+            let dataString = String(data: decodedData, encoding: .utf8) {
+            data = dataString.bytes
         }
-        
+
         return (data, type, typeMetadata)
     }
 }
@@ -148,17 +149,5 @@ extension DataURIParser {
         scanner.pop(2)
         
         return (leftMostDigit.asciiCode * 16) + rightMostDigit.asciiCode
-    }
-}
-
-extension Byte {
-    internal var asciiCode: Byte {
-        if self >= 48 && self <= 57 {
-            return self - 48
-        } else if self >= 65 && self <= 70 {
-            return self - 55
-        } else {
-            return 0
-        }
     }
 }
