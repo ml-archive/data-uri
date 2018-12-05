@@ -1,5 +1,5 @@
 # DataURI
-[![Swift Version](https://img.shields.io/badge/Swift-4-brightgreen.svg)](http://swift.org)
+[![Swift Version](https://img.shields.io/badge/Swift-4.2-brightgreen.svg)](http://swift.org)
 [![Vapor Version](https://img.shields.io/badge/Vapor-3-30B6FC.svg)](http://vapor.codes)
 [![Circle CI](https://circleci.com/gh/nodes-vapor/data-uri/tree/master.svg?style=shield)](https://circleci.com/gh/nodes-vapor/data-uri)
 [![codebeat badge](https://codebeat.co/badges/7f0cab4f-f11b-43d5-8484-bc9300c23d81)](https://codebeat.co/projects/github-com-nodes-vapor-data-uri-master)
