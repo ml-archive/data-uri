@@ -40,9 +40,10 @@ extension DataURIParser {
             type = "text/plain;charset=US-ASCII".bytes
         }
         
-        if let typeMetadata = typeMetadata, typeMetadata == "base64".bytes,
+        if typeMetadata == "base64".bytes,
             let decodedData = Data(base64Encoded: data.convertToData()),
-            let dataString = String(data: decodedData, encoding: .utf8) {
+            let dataString = String(data: decodedData, encoding: .utf8)
+        {
             data = dataString.bytes
         }
 
