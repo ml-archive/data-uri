@@ -14,13 +14,6 @@ class DataURITests: XCTestCase {
         ("testSpeed", testSpeed)
     ]
     
-    func testBase64() {
-        //FIXME(Brett): remove when vapor/core is updated to 1.1
-        let base64Bytes: Bytes = "SGVsbG8sIHdvcmxkIQ==".makeBytes()
-        let output: Bytes = base64Bytes.base64URLDecoded
-        XCTAssertEqual(output.makeString(), "Hello, world!")
-    }
-    
     func testTextNoType() {
         let (data, type, meta) = try! DataURIParser.parse(
             uri: "data:,Hello%2C%20World!"

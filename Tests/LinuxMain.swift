@@ -1,7 +1,8 @@
 import XCTest
-@testable import DataURITests
 
-XCTMain([
-     testCase(DataURITests.allTests),
-     testCase(ParserTests.allTests),
-])
+import DataURITests
+
+var tests = [XCTestCaseEntry]()
+tests += DataURITests.__allTests()
+
+XCTMain(tests)

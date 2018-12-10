@@ -1,6 +1,6 @@
 # DataURI
-[![Swift Version](https://img.shields.io/badge/Swift-3-brightgreen.svg)](http://swift.org)
-[![Vapor Version](https://img.shields.io/badge/Vapor-2-F6CBCA.svg)](http://vapor.codes)
+[![Swift Version](https://img.shields.io/badge/Swift-4.2-brightgreen.svg)](http://swift.org)
+[![Vapor Version](https://img.shields.io/badge/Vapor-3-30B6FC.svg)](http://vapor.codes)
 [![Circle CI](https://circleci.com/gh/nodes-vapor/data-uri/tree/master.svg?style=shield)](https://circleci.com/gh/nodes-vapor/data-uri)
 [![codebeat badge](https://codebeat.co/badges/7f0cab4f-f11b-43d5-8484-bc9300c23d81)](https://codebeat.co/projects/github-com-nodes-vapor-data-uri-master)
 [![codecov](https://codecov.io/gh/nodes-vapor/data-uri/branch/master/graph/badge.svg)](https://codecov.io/gh/nodes-vapor/data-uri)
@@ -14,7 +14,7 @@ A pure Swift parser for Data URIs.
 
 Update your `Package.swift` file.
 ```swift
-.Package(url: "https://github.com/nodes-vapor/data-uri.git", majorVersion: 1)
+.package(url: "https://github.com/nodes-vapor/data-uri.git", from: "2.0.0")
 ```
 
 

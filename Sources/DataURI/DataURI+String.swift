@@ -1,4 +1,3 @@
-import Core
 import Foundation
 
 extension String {
@@ -10,5 +9,10 @@ extension String {
     public func dataURIDecoded() throws -> (data: Bytes, type: String) {
         let (data, type, _) = try DataURIParser.parse(uri: self)
         return (data, type.makeString())
+    }
+
+    /// Converts the string to a UTF8 array of bytes.
+    public var bytes: [UInt8] {
+        return [UInt8](self.utf8)
     }
 }
