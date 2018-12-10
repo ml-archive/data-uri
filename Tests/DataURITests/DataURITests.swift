@@ -1,5 +1,5 @@
 import XCTest
-import Core
+//import Core
 
 @testable import DataURI
 

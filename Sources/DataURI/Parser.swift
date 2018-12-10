@@ -1,4 +1,4 @@
-import Core
+import Foundation
 
 /// A parser for decoding Data URIs.
 public struct DataURIParser {

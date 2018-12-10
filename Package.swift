@@ -7,13 +7,11 @@ let package = Package(
     products: [
         .library(name: "DataURI", targets: ["DataURI"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/vapor/core.git", from: "3.0.0"),
-    ],
+    dependencies: [],
     targets: [
         .target(
         name: "DataURI",
-        dependencies: ["Core"]
+        dependencies: []
         ),
         .testTarget(
         name: "DataURITests",
