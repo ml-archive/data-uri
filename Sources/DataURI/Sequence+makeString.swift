@@ -1,5 +1,3 @@
-import Core
-
 extension Sequence where Iterator.Element == Byte {
     /// Converts a slice of bytes to
     /// string. Courtesy of Vapor 2 - Core and @vzsg
