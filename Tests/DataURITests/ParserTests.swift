@@ -1,4 +1,4 @@
-import Core
+//import Core
 import XCTest
 
 @testable import DataURI
