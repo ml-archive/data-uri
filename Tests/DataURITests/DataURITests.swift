@@ -34,6 +34,16 @@ class DataURITests: XCTestCase {
         XCTAssertEqual(meta?.makeString(), "base64")
     }
     
+    func testBase64Binary() {
+        let (data, type, meta) = try! DataURIParser.parse(
+            uri: "data:text/plain;base64,AAECA3Rlc3QK"
+        )
+        
+        XCTAssertEqual(data, [0, 1, 2, 3, 116, 101, 115, 116, 10])
+        XCTAssertEqual(type.makeString(), "text/plain")
+        XCTAssertEqual(meta?.makeString(), "base64")
+    }
+    
     func testHTMLText() {
         let (data, type, meta) = try! DataURIParser.parse(
             uri: "data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E"
