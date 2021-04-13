@@ -41,10 +41,9 @@ extension DataURIParser {
         }
         
         if typeMetadata == "base64".bytes,
-            let decodedData = Data(base64Encoded: data.convertToData()),
-            let dataString = String(data: decodedData, encoding: .utf8)
+            let decodedData = Data(base64Encoded: data.convertToData())
         {
-            data = dataString.bytes
+            data = Array(decodedData)
         }
 
         return (data, type, typeMetadata)
